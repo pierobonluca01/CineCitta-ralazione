@@ -1,0 +1,96 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{float}
+\usepackage{graphicx}
+
+\graphicspath{ {./img/} }
+
+\geometry{
+    a4paper,
+    top=20mm,
+    bottom=20mm,
+}
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.3cm}
+
+\renewcommand{\contentsname}{Indice}
+
+\title{Progetto TecWeb \\ UniHelp@Unipd}
+
+\author{Marco Dolzan, Zaccaria Marangon, Luca Pierobon, Mattia Piva}
+\date{Giugno 2023}
+
+
+\begin{document}
+
+\begin{titlepage}
+    
+    \begin{center}
+        \includegraphics[width=0.25\linewidth]{logo_unipd.png}
+        
+        Università degli Studi di Padova
+        
+        \vspace{2cm}
+
+        \textbf{\Huge{CineCitta}}\\[1cm]
+
+        \textbf{\huge{Relazione del progetto per il corso Tecnologie Web}}\\[0.2cm]
+        \Large{Anno Accademico 2022-2023}
+
+        \vspace{1cm}
+
+        \textbf{\Large{Gruppo}}
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{r | l}
+                \texttt{2009092} & Dolzan Marco\\
+                \texttt{2009111} & Marangon Zaccaria\\
+                \texttt{2008649} & Pierobon Luca\\
+                \texttt{2008065} & Piva Mattia\\
+            \end{tabular}
+        \end{table}
+
+        \vspace{1cm}
+
+        \textbf{\Large{Informazioni}}\\[0.2cm]
+        \textbf{Indirizzo sito web:} \url{http://tecweb.studenti.math.unipd.it/lpierobo}\\
+        \textbf{Email referente gruppo:} \href{mailto:luca.pierobon.2@studenti.unipd.it}{\texttt{luca.pierobon.2@studenti.unipd.it}} \\
+        
+        \vspace{1cm}
+        
+        \textbf{Credenziali di accesso}
+        \begin{longtable}{|l|l|l|}
+            \hline
+            \rowcolor[HTML]{163f77}
+            \color{white} \textbf{Ruolo} & \color{white} \textbf{Username} & \color{white} \textbf{Password}\\
+            \hline
+            Utente & \texttt{user} & \texttt{user}\\
+            \hline
+            Amministratore & \texttt{admin} & \texttt{admin}\\
+            \hline
+        \end{longtable}
+    \end{center}
+
+\end{titlepage}
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\input{contents/introduzione.tex}
+\input{contents/analisi.tex}
+\input{contents/progettazione.tex}
+\input{contents/realizzazione.tex}
+\input{contents/accessibilita.tex}
+\input{contents/seo.tex}
+\input{contents/sviluppi_futuri.tex}
+\input{contents/note_installazione.tex}
+\input{contents/conclusioni.tex}
+
+\end{document}

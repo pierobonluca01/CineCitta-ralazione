@@ -1,0 +1,61 @@
+\section{Realizzazione}
+
+\subsection{Back-end}
+
+\subsubsection{PHP e sistema a \textit{component}}
+Il sistema a component consente di caricare i template HTML da file separati e sostituire dinamicamente i tag o i valori all'interno del template con informazioni elaborate dal codice in PHP. Ogni componente è un oggetto istanziato della classe \texttt{Template} o di una sua sottoclasse, che a sua volta può contere nuovi metodi per funzionalità specifiche del componente.
+
+Ogni pagina del sito è costruita con questo sistema, ciò ha consentito di lavorare a più parti del progetto simultaneamente.
+
+\subsubsection{Database}
+
+La classe \texttt{Database} è progettata per gestire tutte le operazioni relative al database, fornendo un'interfaccia unica per interagirci. Per connettersi al database, è possibile utilizzare i metodi dedicati \texttt{connect()} e \texttt{disconnect()} per stabilire e terminare la connessione, rispettivamente. Questi metodi consentono di gestire la connettività con il database in modo controllato ed efficiente.
+
+Una volta stabilita la connessione al database è possibile eseguire query per recuperare o modificare i dati attraverso il metodo \texttt{query()}.
+
+Di seguito sono riportate le tabelle del database:
+\begin{itemize}
+    \item \textbf{users:} Utenti registrati;
+    \item \textbf{admin:} Utenti (riferimento da \texttt{users}) che possiedono privilegi di amministrazione;
+    \item \textbf{movies:} Film in programmazione. Per ogni film sono archiviate le informazioni principali e il percorso del poster in modo che l'inserimento di immagini avvenga attraverso il sito senza la necessità di accedere direttamente al database;
+    \item \textbf{theaters:} Sale della struttura con il rispettivo numero di posti;
+    \item \textbf{screenings:} Lista delle proiezioni. Ogni proiezione fa riferimento ad un record di \texttt{movies} e ad un record di \texttt{theaters}. Questa associazione consente di stabilire una relazione tra il film specifico che viene proiettato e la sala in cui avviene la proiezione, in modo da conoscere il numero di posti occupati per ogni evento;
+    \item \textbf{bookings:} Lista delle prenotazioni. Ogni prenotazione è identificata dall'id\\ dell'utente che ha effettuato la prenotazione e dall'id della proiezione scelta. Per ogni prenotazione si conosce il numero di posti riservati all'utente;
+    \item \textbf{promo:} Promozioni giornaliere;
+    \item \textbf{messages:} Messaggi ricevuti attraverso il form presente nella pagina \textit{Contatti}.
+    
+\end{itemize}
+
+\subsubsection{Permessi}
+Ogni file PHP ha i permessi impostati a \texttt{chmod 640}.
+Il grado 640 assegna all'utente i permessi di lettura e scrittura (6), al gruppo soltanto il permesso di lettura (4), agli altri utenti nessun permesso (0) in modo da proteggere i dati sensibili contenuti all'interno, ad esempio le credenziali di accesso al database.
+
+\subsection{CSS}
+Il layout del sito web è stato progettato simultaneamente per desktop e dispositivi mobili, utilizzando ampiamente i \textit{flex layouts}, in modo che si adatti in modo ottimale a schermi di qualsiasi dimensione. La principale differenza tra i due stili, desktop e mobile, è l'utilizzo di un menù ad hamburger per la versione mobile e la rimozione dei margini nel tag \texttt{<main>}, consentendo una visualizzazione più compatta e ottimizzata per i dispositivi mobili.
+
+\paragraph{Foglio di stile per la stampa} È stato creato un file CSS dedicato alla stampa del sito, che consente di generare una versione stampabile delle pagine senza elementi di navigazione o decorazioni superflue limitando, inoltre, l'uso dei colori. In questa versione sono stati rimossi i vari menù, l'header, le immagini decorative, il form di contatto, la barra di ricerca nella lista dei film e il selettore di date nella lista delle proiezioni. Tuttavia, le immagini dei poster dei film sono state mantenute per garantire una rappresentazione visiva dei film anche nella versione stampata.
+
+\subsection{JavaScript}
+
+\subsubsection{Script di validazione}
+Per gestire la validazione lato client dei dati immessi dall'utente è stato sviluppato un codice in JavaScript che controlla il testo inserito nei campi tramite espressioni regolari, ogni qualvolta il focus su di loro cambia.\\
+Se sono presenti caratteri che non rispettano l'espressione regolare associata al campo selezionato viene aggiunto un nuovo elemento \texttt{<p>} con \texttt{role="alert"} direttamente sotto di esso, comunicando il problema.\\
+La validazione lato client consente di impedire il submit del form prima ancora di inviare i dati al server se sono presenti caratteri non validi.
+
+\paragraph{Registrazione} Unicamente a scopo decorativo sono state sviluppate le funzioni\\ \texttt{userValidation()} e \texttt{pswValidation()} per fornire un feedback visivo in tempo reale durante la fase di registrazione di una nuova utenza. Queste funzioni si occupano di evidenziare i singoli requisiti dell'utente e della password man mano che vengono rispettati.
+
+\subsubsection{Script per il \textit{Back to top}}
+Il pulsante \textit{Torna su} (\textit{Back to top}) sfrutta uno script in JavaScript per essere mostrato solamente dopo il primo scorrimento da parte dell'utente. Questo significa che quando l'utente scorre verso il basso nella pagina, il pulsante \textit{Torna su} viene reso visibile per consentire all'utente di ritornare all'inizio della pagina.
+
+Tuttavia, nel caso in cui JavaScript non sia disponibile o disabilitato nel browser\\ dell'utente, è stato implementato un pulsante sostitutivo che viene mostrato in modo permanente, consentendo comunque all'utente di tornare facilmente in cima alla pagina.
+
+\subsubsection{Script per il menù ad \textit{hamburger}}
+La versione mobile nasconde il menù principale per non occupare spazio eccessivo nella visualizzazione di tutte le pagine del sito. Al suo posto è presente un pulsante che consente agli utenti di visualizzare il menù quando lo desiderano.
+
+\subsubsection{Stampa della prenotazione}
+Forniamo agli utenti che effettuano una prenotazione un codice univoco che consente al personale di accedere rapidamente a tutte le informazioni rilevanti associate alla prenotazione.
+
+Per garantire la massima comodità, gli utenti hanno la possibilità di presentare il loro codice di prenotazione utilizzando il proprio dispositivo mobile. Tuttavia, se ciò non fosse possibile abbiamo implementato una funzione di stampa personalizzata che consente agli utenti di stampare la pagina di conferma della prenotazione in un formato ottimizzato, dove vengono rimossi tutti gli elementi del sito web, mantenendo esclusivamente le informazioni essenziali relative alla prenotazione, inclusi il codice univoco e i dettagli correlati.
+
+\subsubsection{Script per la ricerca dei film}
+Nella pagina \textit{Film in sala} è possibile cercare un film attraverso la barra di ricerca messa a disposizione. La barra utilizza JavaScript per effettuare la ricerca in tempo reale.

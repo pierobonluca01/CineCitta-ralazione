@@ -1,0 +1,155 @@
+\section{Progettazione}
+
+Si è scelto di adottare uno schema organizzativo orientato al compito (task). Il sito infatti è principalmente suddiviso in pagine per agevolare gli utenti nel compiere azioni come la visualizzazione dei film, la visualizzazione degli orari di proiezione e la possibilità di effettuare le prenotazioni.
+
+\subsection{Tipi di utente}
+
+\begin{itemize}
+    \item \textbf{Utente non registrato:} Ha pieno accesso a tutte le pagine informative del sito ma, non può effettuare prenotazioni. Può utilizzare il form di contatto.
+    \item \textbf{Utente registrato:} Oltre alle funzionalità dell'utente non registrato, potrà prenotare una proiezione e visualizzare la lista delle prenotazioni effettuate nella propria dashboard.
+    \item \textbf{Amministratore:} Ha completa gestione dei film, delle proiezioni, delle prenotazioni e dei messaggi ricevuti.
+\end{itemize}
+
+\subsection{Struttura del sito}
+
+Il sito è stato organizzato cercando di limitare il più possibile i livelli di profondità ed è strutturato nel seguente modo.\footnote{Per i contenuti delle singole pagine si rimanda a \textit{\nameref{contenuto}.}}
+
+\begin{itemize}
+    \item \textbf{Home:} La pagina principale ha lo scopo di implementare il \textit{tiro perfetto} ed è progettata in modo da fornire all'utente le informazioni più rilevanti e necessarie fin dalla prima schermata.
+    \item \textbf{Proiezioni:} Una sezione dedicata alle proiezioni dei film, suddivise per data.
+    \begin{itemize}
+        \item \textbf{Prenota:} Pagina accessibile agli utenti registrati se selezionano un orario dalla lista delle proiezioni. Consente la prenotazione della proiezione scelta inserendo il numero di posti da riservare.
+    \end{itemize}
+    \item \textbf{Film in sala:} Una lista dei film attualmente in programmazione presso il cinema.
+    \begin{itemize}    
+        \item \textbf{Film:} Pagina dedicata alle informazioni dettagliate su un film specifico, includendo anche le date e gli orari di proiezione disponibili.
+    \end{itemize}
+    \item \textbf{Contatti:} Pagina che raccoglie le principali informazioni della struttura, con la possibilità di mandare un messaggio attraverso un form dedicato.
+    \item \textbf{Login:} Pagina di accesso al proprio account.
+    \begin{itemize}
+        \item \textbf{Registrazione:} Se l'utente non possiede un account ha la possibilità di \\registrarsi.
+    \end{itemize}
+    \item \textbf{Area personale:} L'utente che ha effettuato l'accesso può visualizzare in questa pagina la lista delle prenotazioni effettuate e gestire il proprio account.
+    \begin{itemize}
+        \item \textbf{Eliminazione account:} Pagina di conferma in seguito alla richiesta di eliminazione dell'account.
+    \end{itemize}
+    \item \textbf{Area di amministrazione:} L'utente che ha effettuato l'accesso come amministratore ha accesso a questa area dedicata alla gestione dei contenuti del sito.
+    \begin{itemize}
+        \item \textbf{Gestione prenotazioni}
+        \item \textbf{Gestione film}
+        \item \textbf{Gestione proiezioni}
+        \item \textbf{Messaggi}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Header}
+Nell'header è presente il logo semplificato del sito, che ha anche la funzione di \textit{pulsante home}, e la \textit{navbar}. La \textit{navbar} è una \textit{unordered list} costituita dalle pagine del sito. Per evitare link circolari, quello della pagina attuale viene reso non interagibile e riconoscibile rispetto agli altri.
+
+L'ultimo elemento della lista ha inoltre funzionalità che variano in base allo stato\\ dell'utente:
+\begin{itemize}
+    \item se l'utente non è autenticato la \textit{navbar} mostrerà un pulsante per la pagina di accesso;
+    \item se l'utente è autenticato verrà mostrato un pulsante per accedere all'area personale;
+    \item infine, se l'utente possiede privilegi di amministrazione, avrà la possibilità di accedere all'area riservata.
+\end{itemize}
+
+% Da fare
+\subsubsection{Breadcrumb}
+La breadcrumb è un elemento di navigazione che agevola gli utenti a tener traccia della loro posizione all'interno del sito, in modo da prevenire disorientamento. La breadcrumb è stata strutturata come una \textit{ordered list} (elenco ordinato) per riflettere l'ordine di navigazione delle pagine.
+Nella breadcrumb è possibile tornare su una pagina visitata precedentemente attraverso i link corrispondenti. Anche in questo caso la pagina attuale non è un link per evitare link circolari.
+
+\subsubsection{Contenuto}
+Per mantenere la struttura delle pagine semplice e chiara da navigare, abbiamo cercato di rispondere alle domande fondamentali che contribuiscono ad eliminare il fenomeno del disorientamento:
+
+\begin{itemize}
+    \item \textbf{Dove mi trovo?} A questa domanda è facile rispondere grazie all’header (navbar e breadcrumb), in cui è evidenziata la pagina corrente.
+    \item \textbf{Dove posso andare?} Avendo reso evidenti i link visitabili e non avendo creato una struttura eccessivamente annidata di pagine, è facile capire come spostarsi nel sito e come raggiungere la destinazione interessata. Inoltre, dalla navbar è possibile individuare le pagine navigabili.
+    \item \textbf{Di cosa si tratta?} Il contenuto della pagina fornisce una risposta a questa domanda, demarcato dal tag semantico \texttt{<main>}. Questo consente a coloro che visitano il sito con strumenti di accessibilità di muoversi direttamente in questa sezione se conoscono già le risposte alle precedenti due domande.
+    \item \textbf{Come sono arrivato qui?} La breadcrumb presente nella navbar fornisce una cronologia delle pagine visitate dall’utente, in modo che sia sempre consapevole della sua posizione durante la navigazione.
+\end{itemize}
+
+\paragraph{Contenuto delle pagine} \label{contenuto}
+
+\begin{itemize}
+    \item \textbf{Homepage}:
+    La homepage del sito accoglie i visitatori con una selezione di film in evidenza, con la lista delle proiezioni odierne, con la promozione del giorno e con i prezzi. Inoltre, fornisce informazioni generali sul cinema e le tecnologie utilizzate.
+    La selezione di film in evidenza è stata implementata mostrando casualmente tre film tra quelli disponibili nella struttura.\footnote{Decisione di \textit{\nameref{emotional_design}}.}
+    \item \textbf{Proiezioni}:
+    Questa pagina presenta un selettore di date e mostra una lista dei film che hanno delle proiezioni programmate per il giorno selezionato. La data può essere cambiata attraverso il \textit{picker} che compare premendo la data selezionata in quel momento, oppure grazie ai pulsanti dedicati al giorno precedente ed al giorno successivo. Ogni orario di proiezione, se selezionato, porta alla pagina di prenotazione specifica per quel film in quella data e orario.
+    \item \textbf{Prenota}:
+    Questa pagina mostra un form per effettuare una prenotazione. Dopo aver confermato la prenotazione, viene mostrato un riepilogo con i dettagli della prenotazione stessa che possono, eventualmente, essere stampati con il pulsante messo a disposizione. La pagina impedisce la prenotazione di proiezioni non più disponibili, ad esempio quando la proiezione è già iniziata, oppure se lo spettacolo non possiede posti sufficienti.
+    
+    Questa pagina richiede l'accesso all'account. Inoltre, se ad ever effettuato l'accesso è un utente con privilegi di amministrazione, avrà la possibilità di rimuovere la proiezione direttamente su questa pagina.
+    \item \textbf{Film in sala}:
+    Questa pagina presenta una barra di ricerca interattiva che permette ai visitatori di cercare specifici film. Mostra anche una lista dei film attualmente in sala, ognuno dei quali può essere cliccato per accedere alla pagina del film specifico.
+    \item \textbf{Film}:
+    La pagina dedicata a un film specifico contiene informazioni dettagliate su quel film. Mostra anche le date e gli orari delle proiezioni per il film selezionato, ognuno dei quali può essere cliccato per accedere alla pagina di prenotazione specifica per quell'orario.
+    \item \textbf{Contatti}:
+    Questa pagina fornisce informazioni di contatto per il cinema e include un form che permette ai visitatori di inviare messaggi al team del cinema per richieste o domande.
+    \item \textbf{Login}:
+    Questa pagina mostra un form per accedere all'account personale. Gli utenti devono inserire le proprie credenziali di accesso per poter accedere alle funzionalità dell'account.
+    \item \textbf{Registrazione}:
+    La pagina di registrazione presenta un form che richiede agli utenti di fornire le informazioni necessarie per creare un nuovo account. Include anche dei controlli per verificare i requisiti di registrazione.
+    \item \textbf{Area personale}:
+    Questa pagina è dedicata all'account personale dell'utente registrato. Mostra una lista delle prenotazioni effettuate, ognuna delle quali è associata a un codice che può essere cliccato per accedere alla pagina di dettaglio della prenotazione. La pagina include, inoltre, diversi form per gestire l'account, come la modifica del nome utente, della password o la richiesta di cancellazione dell'account.
+    \item \textbf{Eliminazione account}:
+    La pagina di eliminazione dell'account richiede all'utente di confermare la volontà di eliminare il proprio account.
+    \item \textbf{Area di amministrazione}:
+    Questa pagina è riservata agli amministratori del sito e presenta una landing page che fornisce accesso a diverse funzionalità di amministrazione. Include un menù di navigazione con collegamenti alle pagine per gestire i contenuti del sito.
+    \begin{itemize}
+        \item \textbf{Gestione prenotazioni}: Ricerca prenotazione; Elimina prenotazioni;
+        \item \textbf{Gestione film}: Inserimento film; Modifica film;
+        \item \textbf{Gestione proiezioni}: Rimozione proiezione; Inserimento proiezione;
+        \item \textbf{Messaggi}: Lista dei messaggi.
+    \end{itemize}
+\end{itemize}
+
+Alcune pagine non sono raggiungibili direttamente dall'utente in quanto modificate da PHP in seguito, ad esempio, al submit di un form come l'avvenuta prenotazione di una proiezione o l'eliminazione con successo del proprio account.
+
+\subsubsection{Footer}
+Nel footer sono presenti informazioni attinenti alla struttura e al sito, compreso un ulteriore menù di navigazione.
+
+\subsection{Emotional design} \label{emotional_design}
+Durante la fase di progettazione, abbiamo adottato l'approccio dell'emotional design in diversi aspetti per creare una connessione più diretta e coinvolgente con l'utente. Uno dei principali obiettivi era trasmettere una sensazione di comfort e relax attraverso l'interfaccia.
+Per raggiungere questo scopo, abbiamo utilizzato ampiamente forme arrotondate, che tendono ad evocare una sensazione di morbidezza e accoglienza. Inoltre, come colore principale del sito è stato scelto il blu che richiama gli interni delle sale del cinema e crea un'atmosfera rilassante.
+
+Inoltre, la selezione di film in evidenza mostrati nella homepage è stata implementata mostrando casualmente tre film tra quelli disponibili nella struttura. Questo approccio aggiunge una componente di sorpresa e varietà all’esperienza di navigazione, invitando i visitatori a scoprire film diversi ad ogni visita.
+
+Abbiamo anche prestato particolare attenzione alla gestione delle pagine di errore, cercando di sdrammatizzarle e rendere l'esperienza più piacevole nonostante l'inconveniente. Ad esempio, sulla pagina di errore 404 (pagina non trovata) abbiamo inserito una citazione tratta da \textit{Ritorno al futuro}, che aggiunge un tocco di umorismo. Per gli errori 500 (errori del server), abbiamo utilizzato una battuta più generica che mira a rassicurare gli utenti.
+
+\subsection{Suddivisione del lavoro}
+
+\begin{itemize}
+    \item \textbf{Dolzan Marco:}
+        \begin{itemize}
+            \item Sviluppo dei \textit{component} PHP;
+            \item Sviluppo del codice JavaScript per gli elementi di accessibilità e utilità;
+            \item Test generali del sito;
+            \item Stesura della relazione.
+        \end{itemize}
+    \item \textbf{Marangon Zaccaria:}
+        \begin{itemize}
+            \item Realizzazione dei \textit{template} HTML;
+            \item Sviluppo del codice JavaScript per la validazione dei form;
+            \item Sviluppo dei fogli di stile CSS;
+            \item Validazione delle pagine;
+            \item Stesura della relazione.
+        \end{itemize}
+    \item \textbf{Pierobon Luca:}
+        \begin{itemize}
+            \item Progettazione del sito;
+            \item Progettazione del sistema di classi PHP per lo sviluppo e l'implementazione dei \textit{component};
+            \item Progettazione e sviluppo del database;
+            \item Sviluppo dei \textit{component} PHP;
+            \item Stesura della relazione.
+        \end{itemize}
+    \item \textbf{Piva Mattia:}
+        \begin{itemize}
+            \item Design dell'aspetto del sito e loghi.
+            \item Scelta dei colori e della color palette accessibile.
+            \item Sviluppo dei fogli di stile CSS;
+            \item Verifica dei contrasti;
+            \item Stesura della relazione.
+        \end{itemize}
+\end{itemize}
+
+Nostante la suddivisione, tutti i membri hanno collaborato lavorando alla maggior parte degli aspetti del sito in modalità sincrona, così da dar modo ad ognuno di esprimere le proprie preferenze sulle diverse implementazioni.

@@ -1,0 +1,75 @@
+\section{Accessibilità}
+Il sito è stato sviluppato seguendo le linee guida \textit{Web Content Accessibility Guidelines} (WCAG).
+Le linee guida per l'accessibilità dei contenuti web comprendono una grande varietà di raccomandazioni per rendere accessibili i contenuti ad un più ampio numero di persone con disabilità.
+
+\subsection{Separazione tra contenuto, presentazione e struttura}
+La separazione tra contenuto, presentazione e struttura in un sito web è importante innanzitutto per renderlo maggiormente flessibile e di facile manutenzione, poiché è possibile apportare modifiche a uno degli aspetti limitando le modifiche agli altri. Successivamente, favorisce l'accessibilità del sito per gli utenti con disabilità e permette una migliore visualizzazione su diverse piattaforme e dispositivi.
+
+Il contenuto del sito è stato sviluppato utilizzando HTML5, consentendoci l’utilizzo di tag semantici e funzionalità disponibili tramite questo standard rispettando in ogni caso la sintassi, più rigorosa, di XML. La presentazione in CSS3.
+
+Si è deciso di non rispettare la totale separazione in due casi:
+\begin{itemize}
+    \item nelle funzionalità che richiedono una presentazione differente in assenza di\\JavaScript;
+    \item nella homepage per i poster dei film, dove si è scelto di renderle immagini di sfondo (e quindi di trattarle come elementi decorativi). Essendo il percorso di ogni immagine salvato nel database, era necessario sostituirlo in una pagina accessibile da PHP.
+\end{itemize}
+
+
+\subsubsection{Assenza di CSS}
+La struttura del sito è progettata in modo tale che rimanga comprensibile anche in assenza di CSS, assicurando un'esperienza accessibile per tutti gli utenti. Essendo fruibile tramite screen-reader e altri strumenti per l'accesso facilitato si consente a persone con disabilità visive o altre limitazioni di accedere al contenuto e interagire con esso in modo efficace.
+
+\subsubsection{Assenza di JavaScript}
+Il sito offre alcuni miglioramenti della qualità dell'esperienza utente (\textit{Quality of Life}) attraverso l'uso di JavaScript, sebbene non siano essenziali per il funzionamento del sito stesso. In caso di disattivazione di JavaScript, il sito rimane comunque completamente utilizzabile, poiché JavaScript contribuisce principalmente a migliorare l'esperienza di utilizzo, come già menzionato in precedenza.
+
+Di seguito si elencano i comportamenti delle varie funzionalità in assenza di JavaScript:
+\begin{itemize}
+    \item \textbf{\textit{Back to top}}: È stato implementato un pulsante sostitutivo che viene mostrato in modo permanente, consentendo comunque all’utente di tornare facilmente in cima alla pagina;
+    \item \textbf{Menù ad \textit{hamburger}}: Il menù non è più a comparsa ma rimane visibile nella parte superiore del sito, rendendolo sempre accessibile.
+    \item \textbf{Pulsante di stampa prenotazione}: Il pulsante per la stampa della prenotazione è nascosto poiché richiede l'utilizzo di JavaScript per rimuovere gli elementi non essenziali dalla pagina prima della stampa. Tuttavia, gli utenti possono comunque stampare la pagina utilizzando la funzionalità di stampa di base offerta dai loro browser.
+    \item \textbf{Ricerca dei film}: La barra di ricerca non fornisce più risultati in tempo reale ma permette comunque la ricerca attraverso il pulsante per il submit del form. I risultati saranno, perciò, consultabili solamente dopo aver inviato la richiesta.
+    In aggiunta, una volta effettuata la ricerca, verrà mostrato il testo ricercato e la possibilità di rimuovere il filtro.
+    \item \textbf{Validazione dei form}: Nonostante il controllo degli input non venga più eseguito lato client, sono sempre presenti controlli lato server per garantire la validità e la sicurezza dei dati inviati dall'utente. Questi controlli si occupano di validare le informazioni ricevute dal client prima di salvarle nel database.
+    In ogni caso rimangono le limitazioni lato client del tipo di dato e della sua lunghezza attraverso le restrizioni base offerte da HTML.
+\end{itemize}
+
+
+
+\subsection{Contrasti}
+Ci siamo serviti dello strumento \href{https://huemint.com/brand-intersection/}{\textit{Huemint}}, con il preset \textit{High Contrast} per generare una color palette accessibile iniziale che includesse il colore principale del sito.\footnote{Per approfondire la decisione del colore principale si veda la sezione \textit{\nameref{emotional_design}}.}
+I rimanenti colori sono stati scelti rispettando il livello di contrasto per l’accessibilità secondo lo standard AAA di WCAG. I livelli di contrasto sono stati confermati con l’utilizzo di \href{https://webaim.org/resources/contrastchecker/}{\textit{WebAIM Contrast Checker}}, l’estensione WAVE \href{https://wave.webaim.org/extension/}{\textit{WAVE Web Accessibility Evaluation Tools}} e il tool \textit{ispeziona elemento} dei browser basati su Chromium.
+
+\subsection{Tag e attributi}
+
+\subsubsection{Attributi ARIA}
+Nonostante aver utilizzato il più possibile i tag semantici offerti da \texttt{HTML5} abbiamo inserito anche alcuni attributi ARIA in modo da renderli più espressivi e accessibli.
+\begin{itemize}
+    \item \textbf{Form:} I messaggi di errore generati da PHP o dalla validazione JavaScript nei diversi form hanno come attributo \texttt{role="alert"}. Questo ruolo porta l'attenzione dello screen-reader sull'elemento che presenta questo attributo quando questo viene inserito nella pagina.
+    \item \textbf{Menù:} I diversi menù sono descritti dall'attributo \texttt{aria-label}.
+    \item \textbf{Breadcrumb:} La breadcrumb è stata definita tramite \texttt{aria-label} come \textit{breadcrumb};
+    \item \textbf{Orari delle proiezioni:} Sono stati aggiunti attributi \texttt{aria-label} ai link (tag \texttt{<a>}) degli orari delle proiezioni nelle pagine \textit{Proiezioni} e \textit{Film in sala} per fornire una descrizione chiara del loro scopo. Questi attributi consentono agli utenti con disabilità o con ausilio di screen-reader di comprendere facilmente che quei link portano alla pagina di prenotazione per l'orario selezionato.
+    \item \textbf{Selettore data:} La data che indica quali sono le proiezioni disponibili in quel giorno nella pagina \textit{Proiezioni} funge anche da pulsante per far comparire il selettore di una data diversa. Questo pulsante è identificato dall'attributo \texttt{aria-label}.
+    \item \textbf{Data in homepage:} La data in homepage è un elemento presente esclusivamente a scopo decorativo, si è deciso perciò di attribuirgli \texttt{aria-hidden="true"}.
+\end{itemize}
+
+\subsubsection{Attributo \texttt{tabindex}}
+L’unico utilizzo di tabindex che abbiamo ritenuto necessario utilizzare è per il link \textit{Vai al contenuto} a cui è stato assegnato il valore \texttt{tabindex="0"} in modo che sia sempre il primo elemento della pagina. Nel contesto del nostro sito, non abbiamo ritenuto necessario utilizzare ulteriormente tabindex. La struttura del sito è stata progettata in modo tale da seguire un ordine logico e intuitivo, garantendo una corretta navigazione e accessibilità per gli utenti.
+
+\subsubsection{Localizzazioni e termini abbreviati} \label{lingue}
+Si è scelto di utilizzare la lingua italiana come lingua del sito per garantire una migliore comprensione e fruizione dei contenuti da parte degli utenti target di cui si è svolta l’analisi.\footnote{Si veda anche la sezione \textit{\nameref{sviluppi_futuri}.}}
+Per tutte le parole che sono abbreviazioni o necessitano di pronuncia straniera si è fatto uso rispettivamente del tag \texttt{<abbr>} e dell'attributo \texttt{lang} implementato all’interno del tag \texttt{<span>}.
+
+\paragraph{Nota sulle date} La rappresentazione delle date all'interno del sito varia in base al \textit{language pack} installato sul server. Nel server fornito, al momento, è disponibile solo il language pack in lingua inglese, pertanto le date che includono i giorni e i mesi in forma estesa non verranno mostrate in italiano.
+
+\subsection{Testing}
+
+\subsubsection{Strumenti}
+I controlli sono stati eseguiti sfruttando l’estensione \href{https://wave.webaim.org/extension/}{\textit{WAVE Web Accessibility Evaluation Tools}} ed il software \href{https://www.totalvalidator.com/}{\textit{Total Validator}}. 
+Durante la fase di sviluppo e, successivamente, di controllo abbiamo utilizzato il software Lighthouse integrato nel browser Google Chrome.
+
+\subsubsection{Ambienti}
+I test sono stati eseguiti su ambiente Linux e Windows, nei browser Google Chrome, Microsoft Edge, Mozilla Firefox e Chromium. Non sono stati effettuati test su Internet Explorer in quanto dalle versioni di Windows 10 e successive non è più possibile utilizzarlo\footnote{Se l’utente prova ad avviare Internet Explorer, Windows avvierà Microsoft Edge al suo posto.}. Per l’ambiente MacOS e il browser Safari essendo impossibilitati dal condurre test abbiamo optato per la correzione degli errori nel caso di segnalazioni da parte degli utenti che ne usufruiranno.
+
+Si è inoltre utilizzata la funzione \textit{Device Mode}, offerta dai browser basati su Chromium, che simula diversi dispositivi mobili per valutare l'aspetto e il comportamento del sito con schermi di varie dimensioni.
+
+
+\subsubsection{Risultati di Lighthouse} \label{lighthouse}
+Nei report il punteggio ottenuto nelle categorie è principalmente 100, ad eccezione della categoria \textit{Performance} nelle pagine che contengono immagini (dovuto alla scelta di non adottare WebP come formato) oppure alle pagine dell'area personale che non sono volutamente indicizzate. In ogni caso le valutazioni di questa categoria rimangono sopra il punteggio 90.

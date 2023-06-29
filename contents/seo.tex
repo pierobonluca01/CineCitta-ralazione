@@ -1,0 +1,12 @@
+\section{Search Engine Optimization}
+
+Per avere un buon posizionamento nei motori di ricerca è necessario garantire buone prestazioni del sito. Di seguito sono riportati i miglioramenti apportati:
+
+\begin{itemize}
+    \item Minimizzare i file JavaScript e CSS\footnote{Si è deciso di non minimizzare i file contenuti nello .zip di consegna per questioni di leggibilità.};
+    \item Uso dei tag semantici introdotti in HTML5 che permettono ai motori di ricerca di fare il \textit{crawl} di un sito ignorando, ad esempio, alcune sezioni della pagina, come possono essere quelle racchiuse dai tag header o footer;
+    \item Impostare regole di caching usando \texttt{header("Cache-Control:\\ max-age=2592000")} (suggerito da Lighthouse) e direttive \texttt{ExpiresByType} contenute in \texttt{.htaccess};
+    \item Ottimizzare le immagini. Le locandine dei film utilizzano il formato JPEG che assicura una maggiore compatibilità e supporto dai vari browser. Oltretutto il formato JPEG è stato scelto per ottenere un buon bilanciamento tra qualità e peso dell’immagine. Abbiamo adottando anche l’utilizzo di immagini in formato SVG che consentono di mantenere la qualità dell’immagine nel caso di riduzione o ingrandimento di essa garantendo supporto \textit{cross-platform} ad un peso ridotto;
+    \item Uso di \texttt{meta keywords} e \texttt{meta description} che, seppur non usate più dai principali motori di ricerca per posizionare i risultati nella SERP, invitano l'utente a visitare il sito;
+    \item In generale, seguire i consigli forniti da Google Lighthouse. Il suo uso ha consentito di migliorare le prestazioni del sito sistemando alcuni dettagli minori.\footnote{Si veda sezione \textit{\nameref{lighthouse}}.}
+\end{itemize}
